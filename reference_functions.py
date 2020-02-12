@@ -1,4 +1,12 @@
 
+# returns True if n is prime
+def isPrime(n):
+    sqrt = (int)(math.sqrt(n)+1)
+    for i in range(2,sqrt):
+        if n%i==0:
+            return False
+    return True
+
 # returns a list of the first n primes
 def eratosthenes(n):
     primes = [2]
