@@ -35,3 +35,17 @@ def divisors(n):
                     div_list.append(i)
                     div_list.append(int(n/i))
     return div_list
+
+
+# finds all possible permutations of the string
+# s = the string
+# a = starting index
+# b = ending index
+def permute(s, a, b):
+    if a==b:
+        permutations.append(''.join([str(c) for c in s]))
+    else:
+        for i in range(a,b+1):
+            s[a], s[i] = s[i], s[a]
+            permute(s, a+1, b)
+            s[a], s[i] = s[i], s[a] #backtrack
