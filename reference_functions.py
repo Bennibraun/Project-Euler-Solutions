@@ -37,15 +37,37 @@ def divisors(n):
     return div_list
 
 
-# finds all possible permutations of the string
-# s = the string
+# finds all possible permutations of a list
+# s = the list
 # a = starting index
 # b = ending index
 def permute(s, a, b):
     if a==b:
-        permutations.append(''.join([str(c) for c in s]))
+        permutations.append(s)
     else:
         for i in range(a,b+1):
             s[a], s[i] = s[i], s[a]
             permute(s, a+1, b)
             s[a], s[i] = s[i], s[a] #backtrack
+
+
+# Takes 3 ints, returns true iff there is exactly one instance of each digit from 1-9
+def isPandigital(a, b, c):
+    # Create list to track digit presence
+    digits = [False for i in range(0,9)]
+
+    # Turn ints into lists
+    ints = [int(i) for i in (str(a) + str(b) + str(c))]
+    
+    for i in ints:
+        if digits[i-1]:
+            # Repeated digit found
+            return False
+        else:
+            # Unique digit found
+            digits[i-1] = True
+    
+    for i in digits:
+        if not i:
+            return False
+    return True
