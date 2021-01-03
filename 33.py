@@ -10,22 +10,44 @@
 
 import math
 
-product_num = 1
-product_den = 1
+matches = []
 
-for numerator in range(10,100):
-    for denominator in range(numerator+1,100):
-        # print numerator,
-        # print '/',
-        # print denominator
-        quotient = float(numerator)/float(denominator)
-        num_list = [float(x) for x in str(numerator)]
-        den_list = [float(x) for x in str(denominator)]
-        for i in range(0,2):
-            for j in range(0,2):
-                if num_list[0] != num_list[1] and num_list[0] != 0 and num_list[1] != 0 and den_list[j] != 0 and num_list[i] / den_list[j] == quotient and num_list[j] == num_list[i]:
-                    print 'multiplying by ', numerator, ' and ', denominator
-                    product_num *= numerator
-                    product_den *= denominator
+for num in range(11, 100):
+    for den in range(11, 100):
+        num_dig = [num % 10, int(num / 10)]
+        den_dig = [den % 10, int(den / 10)]
+        if not ((0 in num_dig and 0 in den_dig) or (num_dig[0] == num_dig[1]) or (num == den) or (num > den)):
+            d = 0
+            for ni in range(0, 2):
+                for di in range(0, 2):
+                    if num_dig[ni] == den_dig[di]:
+                        n = num_dig[abs(ni - 1)]
+                        d = den_dig[abs(di - 1)]
+            
+            frac = num / den
+            try:
+                if n / d == frac:
+                    matches.append([num, den])
+            except:
+                pass
 
-print product_num, '/', product_den
+def simplify(num, den):
+
+    for i in range(2, int(math.sqrt(num)) + 1):
+        if num % i == 0 and den % i == 0:
+            num /= i
+            den /= i
+    for i in range(2, int(math.sqrt(den)) + 1):
+        if num % i == 0 and den % i == 0:
+            num /= i
+            den /= i
+        
+    return (num,den)
+
+num_prod = 1
+den_prod = 1
+for f in matches:
+    num_prod *= f[0]
+    den_prod *= f[1]
+
+print(simplify(num_prod,den_prod)[1])
